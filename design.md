@@ -16,3 +16,10 @@
 # Simple Programs
 1. Face detecting and identification
 1. Greeting respective to face identification
+
+### Some consideration
+Input and Output cannot be filters since they generate the stream one by one
+and filter process one at a time. ???!&^%@&!
+
+For now, filters work on only one stream, we need to think about how to create
+and combine streams.
