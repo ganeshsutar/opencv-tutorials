@@ -6,7 +6,7 @@ import cv2
 from datetime import datetime
 
 class RealTimeVideoStream:
-    def __init__(self, chain, resolution = (640, 480)):
+    def __init__(self, chain = None, resolution = (640, 480)):
         self.chain = chain
         self.current_filename = None
         self.resolution = resolution
@@ -27,9 +27,10 @@ class RealTimeVideoStream:
         while(cap.isOpened()):
             ret, frame = cap.read()
             if ret == True:
-                oframe = self.chain.filter(frame)
-                out.write(oframe)
-                cv2.imshow('frame', oframe)
+                if self.chain != None:
+                    frame = self.chain.filter(frame)
+                out.write(frame)
+                cv2.imshow('frame', frame)
                 if cv2.waitKey(1) & 0xff == ord('q'):
                     break
             else:

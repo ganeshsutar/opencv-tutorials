@@ -1,21 +1,29 @@
 #! /usr/bin/python
 
+import argparse
 import logging
+
+parser = argparse.ArgumentParser(
+    description = 'zen'
+)
+parser.add_argument('-v', '--verbose', help='Set the logging level to DEBUG', action='store_true')
+
+args = parser.parse_args()
+
+if (args.verbose):
+    logging.basicConfig(level=logging.DEBUG)
+else:
+    logging.basicConfig(level=logging.INFO)
+
+import config
+import db
 import cv2
 import filters
 import util
-import cairo
-import numpy as np
-
-def main():
-    # All frame will be in RGBA format
-    rgbConverter = filters.ColorConverter(cv2.COLOR_BGR2RGBA)
-    cascade = filters.CascadeClassifier(".\\data\\face_haar.xml")
-    bgrConverter = filters.ColorConverter(cv2.COLOR_RGBA2BGR)
-    chain = filters.Composite([rgbConverter, cascade, bgrConverter])
-    rt = util.RealTimeVideoStream(chain)
-    rt.run()
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
-    main()
+    grayFilter = filters.ColorConverter(cv2.COLOR_BGR2GRAY)
+    backFilter = filters.ColorConverter(cv2.COLOR_GRAY2BGR)
+    composite = filters.Composite([grayFilter, backFilter])
+    rt = util.RealTimeVideoStream(composite)
+    rt.run()
