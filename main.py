@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+from datetime import datetime
 
 parser = argparse.ArgumentParser(
     description = 'zen'
@@ -16,16 +17,21 @@ else:
     logging.basicConfig(level=logging.INFO)
 
 import config
-import db
 import cv2
 import filters
 import util
+import io
+
+def get_input():
+    return io.RandomInput(640, 480, True)
+
+def get_output():
+    n = datetime.utcnow()
+    current_filename = '.\\videos\\cap-' + n.strftime('%Y%m%d-%H%M%S') + '.avi'
+    fourcc = cv2.cv.CV_FOURCC(*'I420')
+    return cv2.VideoWriter(current_filename, fourcc, 20.0, (640, 480))
+
 
 if __name__ == "__main__":
-    # grayFilter = filters.ColorConverter(cv2.COLOR_BGR2GRAY)
-    # backFilter = filters.ColorConverter(cv2.COLOR_GRAY2BGR)
-    # composite = filters.Composite([grayFilter, backFilter])
-    # rt = util.RealTimeVideoStream(composite)
-    # rt.run()
-    print config.props
-    print db.conn.getPersons()
+    rt = util.RealTimeVideoStream(get_input(), get_output(), None)
+    rt.run()

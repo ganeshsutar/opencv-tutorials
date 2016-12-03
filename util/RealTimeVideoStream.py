@@ -6,35 +6,26 @@ import cv2
 from datetime import datetime
 
 class RealTimeVideoStream:
-    def __init__(self, chain = None, resolution = (640, 480)):
+    def __init__(self, input, output, chain = None):
+        assert input != None, "Input cannot be None"
+        assert output != None, "Output cannot be None"
+
+        self.input = input
+        self.output = output
         self.chain = chain
-        self.current_filename = None
-        self.resolution = resolution
-
-    def new_capture(self):
-        n = datetime.utcnow()
-        self.current_filename = '.\\videos\\cap-' + n.strftime('%Y%m%d-%H%M%S') + '.avi'
-        return self.current_filename
-
-    def getFilename(self):
-        return self.current_filename
 
     def run(self):
-        self.new_capture()
-        cap = cv2.VideoCapture(0)
-        fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-        out = cv2.VideoWriter(self.current_filename, fourcc, 20.0, self.resolution)
-        while(cap.isOpened()):
-            ret, frame = cap.read()
+        while(self.input.isOpened()):
+            ret, frame = self.input.read()
             if ret == True:
                 if self.chain != None:
                     frame = self.chain.filter(frame)
-                out.write(frame)
+                self.output.write(frame)
                 cv2.imshow('frame', frame)
                 if cv2.waitKey(1) & 0xff == ord('q'):
                     break
             else:
                 break
-        cap.release()
-        out.release()
+        self.input.release()
+        self.output.release()
         cv2.destroyAllWindows()
