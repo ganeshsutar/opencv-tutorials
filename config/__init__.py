@@ -1,3 +1,3 @@
 import Configuration
 
-props = Configuration.load_props('app.cfg')
+props = Configuration.load_props('app.ini')

@@ -1,4 +1,4 @@
-import MySQLdb as mysql
+import mysql.connector
 import logging
 
 class Database:
@@ -11,7 +11,7 @@ class Database:
 
     def connect(self):
         self.close()
-        self.db = mysql.connect(self.host, self.user, self.password, self.dbname)
+        self.db = mysql.connector.connect(host=self.host, user=self.user, password=self.password, database=self.dbname)
 
     def close(self):
         if(self.db != None):
@@ -20,10 +20,10 @@ class Database:
 
     def addPerson(self, person_name):
         logging.debug('Adding person %s', person_name)
-        sql = "INSERT INTO persons VALUES (default, '%s')" % (person_name)
+        sql = "INSERT INTO persons VALUES (default, '%s')"
         cursor = self.db.cursor()
         try:
-            cursor.execute(sql)
+            cursor.execute(sql, (person_name))
             self.db.commit()
         except:
             self.db.rollback()
@@ -31,10 +31,10 @@ class Database:
 
     def addImage(self, person_id, image_path):
         logging.debug('Adding image %d => %s', person_id, image_path)
-        sql = "INSERT INTO person_faces VALUES(default, %d, '%s')" % (person_id, image_path)
+        sql = "INSERT INTO person_faces VALUES(default, %d, '%s')"
         cursor = self.db.cursor()
         try:
-            cursor.execute(sql)
+            cursor.execute(sql, (person_id, image_path))
             self.db.commit()
         except:
             self.db.rollback()

@@ -22,8 +22,10 @@ import filters
 import util
 
 if __name__ == "__main__":
-    grayFilter = filters.ColorConverter(cv2.COLOR_BGR2GRAY)
-    backFilter = filters.ColorConverter(cv2.COLOR_GRAY2BGR)
-    composite = filters.Composite([grayFilter, backFilter])
-    rt = util.RealTimeVideoStream(composite)
-    rt.run()
+    # grayFilter = filters.ColorConverter(cv2.COLOR_BGR2GRAY)
+    # backFilter = filters.ColorConverter(cv2.COLOR_GRAY2BGR)
+    # composite = filters.Composite([grayFilter, backFilter])
+    # rt = util.RealTimeVideoStream(composite)
+    # rt.run()
+    print config.props
+    print db.conn.getPersons()
