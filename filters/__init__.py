@@ -8,3 +8,11 @@ from CascadeClassifier import *
 from RCColorSpace import *
 from RGVColorSpace import *
 from CMVColorSpace import *
+from BGRPortraCurveFilter import *
+from BGRProviaCurveFilter import *
+from BGRVelviaCurveFilter import *
+from VConvolutionFilter import *
+from SharpenFilter import *
+from FindEdgesFilter import *
+from EmbossFilter import *
+from BlurFilter import *
