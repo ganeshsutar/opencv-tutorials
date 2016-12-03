@@ -5,3 +5,6 @@ from CairoSurface import CairoSurface
 from AffineTransformer import *
 from PerspectiveTransformer import *
 from CascadeClassifier import *
+from RCColorSpace import *
+from RGVColorSpace import *
+from CMVColorSpace import *

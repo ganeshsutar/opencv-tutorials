@@ -33,5 +33,6 @@ def get_output():
 
 
 if __name__ == "__main__":
-    rt = util.RealTimeVideoStream(get_input(), get_output(), None)
+    chain = filters.CMVColorSpace()
+    rt = util.RealTimeVideoStream(get_input(), get_output(), chain)
     rt.run()
