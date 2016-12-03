@@ -48,7 +48,6 @@ def get_output():
     writer = cv2.VideoWriter(current_filename, fourcc, 30.0, (width, height))
     return writer
 
-
 if __name__ == "__main__":
-    rt = util.RealTimeVideoStream(get_input(), None, None)
+    rt = util.RealTimeVideoStream(get_input(), get_output(), None)
     rt.run()
