@@ -4,6 +4,7 @@ import argparse
 import logging
 from datetime import datetime
 import logging
+import logutil
 
 parser = argparse.ArgumentParser(
     description = 'zen'
@@ -24,8 +25,8 @@ import filters
 import util
 import io
 
-width = 1280
-height = 738
+width = 640
+height = 480
 
 def get_input_random():
     return io.RandomInput(width, height, True)
@@ -44,10 +45,12 @@ def get_output():
             logging.info('FourCC gives does not have 4 characters. Please choose the output coded')
             fourcc = -1
     else:
+        logging.info("Using 4CC = '%s'", 'I420')
         fourcc = cv2.cv.CV_FOURCC(*'I420')
     writer = cv2.VideoWriter(current_filename, fourcc, 30.0, (width, height))
     return writer
 
 if __name__ == "__main__":
-    rt = util.RealTimeVideoStream(get_input(), get_output(), None)
+    chain = None
+    rt = util.RealTimeVideoStream(get_input_random(), None, chain)
     rt.run()

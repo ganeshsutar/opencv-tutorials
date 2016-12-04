@@ -16,3 +16,4 @@ from SharpenFilter import *
 from FindEdgesFilter import *
 from EmbossFilter import *
 from BlurFilter import *
+from StrokeEdgesFilter import *
